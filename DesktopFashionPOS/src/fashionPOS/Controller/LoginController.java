@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -17,13 +18,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
-    @FXML
-    private TextField txtUsername;
-    @FXML
-    private PasswordField txtPassword;
     private Stage homeStage;
     private LoginDao loginDao;
-    private ObservableList<Tbuser> tbusers;
+    @FXML
+    private PasswordField txtUsername;
+    @FXML
+    private TextField txtPassword;
 
     public boolean getLogin(Tbuser user) {
         return getLoginDao().login(user);
@@ -37,17 +37,17 @@ public class LoginController {
     }
 
     @FXML
-    private void actionLogin(ActionEvent actionEvent) {
-        Tbuser tbuser=new Tbuser();
+    private void SignIn(ActionEvent actionEvent) {
+        Tbuser tbuser = new Tbuser();
         tbuser.setUsername(txtUsername.getText().trim());
         tbuser.setPassword(txtPassword.getText().trim());
-        if (getLogin(tbuser)){
+        if (getLogin(tbuser)) {
             try {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/fashionPOS/View/home.fxml"));
-                BorderPane pane = loader.load();
-                HomeController controller = loader.getController();
-                controller.setMainFormController(this);
+                loader.setLocation(getClass().getResource("/fashionPOS/View/item.fxml"));
+                AnchorPane pane = loader.load();
+//                HomeController controller = loader.getController();
+//                controller.setMainFormController(this);
                 Scene scene = new Scene(pane);
                 homeStage = new Stage();
                 homeStage.setScene(scene);
@@ -58,11 +58,10 @@ public class LoginController {
 
             }
             homeStage.show();
-        }else {
-            Alert a=new Alert(Alert.AlertType.ERROR);
+        } else {
+            Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Username or Password is Wrong!");
             a.show();
         }
-
     }
 }
