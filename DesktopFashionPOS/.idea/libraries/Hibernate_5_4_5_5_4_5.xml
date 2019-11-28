@@ -1,6 +1,5 @@
 <component name="libraryTable">
-  <library name="Hibernate 5.4.5-5.4.5" type="hibernate">
-    <properties version="5.4.5" />
+  <library name="Hibernate 5.4.5-5.4.5">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/istack-commons-runtime-3.0.7.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/hibernate-commons-annotations-5.1.0.Final.jar!/" />
@@ -21,7 +20,6 @@
       <root url="jar://$PROJECT_DIR$/lib/byte-buddy-1.9.11.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/hibernate-core-5.4.5.Final.jar!/" />
     </CLASSES>
-    <JAVADOC />
     <SOURCES />
   </library>
 </component>
