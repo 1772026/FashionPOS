@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HomeController {
+public class HomeAdminController {
     private Stage userStage;
     private Stage itemStage;
     public void actionFormItem(ActionEvent actionEvent) {
@@ -17,7 +17,7 @@ public class HomeController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fashionPOS/View/item.fxml"));
             AnchorPane pane = loader.load();
-//                HomeController controller = loader.getController();
+//                HomeAdminController controller = loader.getController();
 //                controller.setMainFormController(this);
 //            Scene scene = new Scene(pane);
             Scene scene = new Scene(pane);
@@ -35,7 +35,7 @@ public class HomeController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fashionPOS/View/user.fxml"));
             AnchorPane pane = loader.load();
-//                HomeController controller = loader.getController();
+//                HomeAdminController controller = loader.getController();
 //                controller.setMainFormController(this);
             Scene scene = new Scene(pane);
             itemStage.setScene(scene);
