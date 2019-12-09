@@ -47,9 +47,9 @@ public class LoginController {
         if (getLogin(tbuser)) {
             try {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/fashionPOS/View/home.fxml"));
+                loader.setLocation(getClass().getResource("/fashionPOS/View/homeAdmin.fxml"));
                 BorderPane pane = loader.load();
-//                HomeController controller = loader.getController();
+//                HomeAdminController controller = loader.getController();
 //                controller.setMainFormController(this);
                 Scene scene = new Scene(pane);
                 homeStage = new Stage();
