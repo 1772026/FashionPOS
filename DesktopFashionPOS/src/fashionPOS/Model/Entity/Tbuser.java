@@ -1,67 +1,56 @@
 package fashionPOS.Model.Entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 public class Tbuser {
-    private Integer id;
-    private String username;
-    private String password;
-    private String role;
-    private String name;
+    private int userId;
+    private String userUsername;
+    private String userPassword;
+    private String userName;
+    private Collection<Tbtransaction> tbtransactionsByUserId;
+    private Tbrole tbroleByTbroleRoleId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
-        return id;
+    @Column(name = "user_id", nullable = false)
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "username", nullable = false, length = 50)
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Basic
-    @Column(name = "password", nullable = false, length = 50)
-    public String getPassword() {
-        return password;
+    @Column(name = "user_username", nullable = false, length = 50)
+    public String getUserUsername() {
+        return userUsername;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Basic
-    @Column(name = "role", nullable = false, length = 50)
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = 100)
-    public String getName() {
-        return name;
+    @Column(name = "user_password", nullable = false, length = 50)
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    @Basic
+    @Column(name = "user_name", nullable = false, length = 100)
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Override
@@ -69,15 +58,33 @@ public class Tbuser {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tbuser tbuser = (Tbuser) o;
-        return Objects.equals(id, tbuser.id) &&
-                Objects.equals(username, tbuser.username) &&
-                Objects.equals(password, tbuser.password) &&
-                Objects.equals(role, tbuser.role) &&
-                Objects.equals(name, tbuser.name);
+        return userId == tbuser.userId &&
+                Objects.equals(userUsername, tbuser.userUsername) &&
+                Objects.equals(userPassword, tbuser.userPassword) &&
+                Objects.equals(userName, tbuser.userName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, role, name);
+        return Objects.hash(userId, userUsername, userPassword, userName);
+    }
+
+    @OneToMany(mappedBy = "tbuserByTbuserUserId")
+    public Collection<Tbtransaction> getTbtransactionsByUserId() {
+        return tbtransactionsByUserId;
+    }
+
+    public void setTbtransactionsByUserId(Collection<Tbtransaction> tbtransactionsByUserId) {
+        this.tbtransactionsByUserId = tbtransactionsByUserId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "tbrole_role_id", referencedColumnName = "role_id", nullable = false)
+    public Tbrole getTbroleByTbroleRoleId() {
+        return tbroleByTbroleRoleId;
+    }
+
+    public void setTbroleByTbroleRoleId(Tbrole tbroleByTbroleRoleId) {
+        this.tbroleByTbroleRoleId = tbroleByTbroleRoleId;
     }
 }

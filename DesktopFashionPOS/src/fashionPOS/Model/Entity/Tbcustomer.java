@@ -6,61 +6,61 @@ import java.util.Objects;
 
 @Entity
 public class Tbcustomer {
-    private Integer id;
-    private String name;
-    private String address;
-    private String telp;
-    private String email;
-    private Collection<Tbtransaction> tbtransactionsById;
+    private int customerId;
+    private String customerName;
+    private String customerAddress;
+    private String customerTelp;
+    private String customerEmail;
+    private Collection<Tbtransaction> tbtransactionsByCustomerId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
-        return id;
+    @Column(name = "customer_id", nullable = false)
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "name", nullable = false, length = 100)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     @Basic
-    @Column(name = "address", nullable = false, length = 200)
-    public String getAddress() {
-        return address;
+    @Column(name = "customer_name", nullable = false, length = 100)
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    @Basic
-    @Column(name = "telp", nullable = false, length = 20)
-    public String getTelp() {
-        return telp;
-    }
-
-    public void setTelp(String telp) {
-        this.telp = telp;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     @Basic
-    @Column(name = "email", nullable = false, length = 100)
-    public String getEmail() {
-        return email;
+    @Column(name = "customer_address", nullable = false, length = 200)
+    public String getCustomerAddress() {
+        return customerAddress;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    @Basic
+    @Column(name = "customer_telp", nullable = false, length = 20)
+    public String getCustomerTelp() {
+        return customerTelp;
+    }
+
+    public void setCustomerTelp(String customerTelp) {
+        this.customerTelp = customerTelp;
+    }
+
+    @Basic
+    @Column(name = "customer_email", nullable = false, length = 100)
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
     }
 
     @Override
@@ -68,24 +68,24 @@ public class Tbcustomer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tbcustomer that = (Tbcustomer) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(address, that.address) &&
-                Objects.equals(telp, that.telp) &&
-                Objects.equals(email, that.email);
+        return customerId == that.customerId &&
+                Objects.equals(customerName, that.customerName) &&
+                Objects.equals(customerAddress, that.customerAddress) &&
+                Objects.equals(customerTelp, that.customerTelp) &&
+                Objects.equals(customerEmail, that.customerEmail);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, address, telp, email);
+        return Objects.hash(customerId, customerName, customerAddress, customerTelp, customerEmail);
     }
 
-    @OneToMany(mappedBy = "tbcustomerByTbcustomerId")
-    public Collection<Tbtransaction> getTbtransactionsById() {
-        return tbtransactionsById;
+    @OneToMany(mappedBy = "tbcustomerByTbcustomerCustomerId")
+    public Collection<Tbtransaction> getTbtransactionsByCustomerId() {
+        return tbtransactionsByCustomerId;
     }
 
-    public void setTbtransactionsById(Collection<Tbtransaction> tbtransactionsById) {
-        this.tbtransactionsById = tbtransactionsById;
+    public void setTbtransactionsByCustomerId(Collection<Tbtransaction> tbtransactionsByCustomerId) {
+        this.tbtransactionsByCustomerId = tbtransactionsByCustomerId;
     }
 }

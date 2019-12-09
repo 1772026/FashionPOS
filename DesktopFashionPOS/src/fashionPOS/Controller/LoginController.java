@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -40,8 +42,8 @@ public class LoginController {
     @FXML
     private void SignIn(ActionEvent actionEvent) {
         Tbuser tbuser = new Tbuser();
-        tbuser.setUsername(txtUsername.getText().trim());
-        tbuser.setPassword(txtPassword.getText().trim());
+        tbuser.setUserName(txtUsername.getText().trim());
+        tbuser.setUserPassword(txtPassword.getText().trim());
         if (getLogin(tbuser)) {
             try {
                 FXMLLoader loader = new FXMLLoader();
@@ -65,6 +67,12 @@ public class LoginController {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Username or Password is Wrong!");
             a.show();
+        }
+    }
+
+    @FXML
+    private void keyListener(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER) {
         }
     }
 }

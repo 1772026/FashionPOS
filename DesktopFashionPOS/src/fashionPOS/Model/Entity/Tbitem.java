@@ -6,83 +6,63 @@ import java.util.Objects;
 
 @Entity
 public class Tbitem {
-    private Integer id;
-    private String name;
-    private Integer stock;
-    private Integer priceSell;
-    private Integer priceSupply;
-    private String description;
-    private String size;
-    private Collection<Tbtransaction> tbtransactionsById;
+    private int itemId;
+    private String itemName;
+    private int itemPriceSell;
+    private int itemPriceSupply;
+    private String itemDescription;
+    private Tbcategory tbcategoryByTbcategoryCategoryId;
+    private Collection<Tbsizestock> tbsizestocksByItemId;
+    private Collection<Tbtransaction> tbtransactionsByItemId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
-        return id;
+    @Column(name = "item_id", nullable = false)
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "name", nullable = false, length = 50)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     @Basic
-    @Column(name = "stock", nullable = false)
-    public Integer getStock() {
-        return stock;
+    @Column(name = "item_name", nullable = false, length = 50)
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    @Basic
-    @Column(name = "price_sell", nullable = false)
-    public Integer getPriceSell() {
-        return priceSell;
-    }
-
-    public void setPriceSell(Integer priceSell) {
-        this.priceSell = priceSell;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     @Basic
-    @Column(name = "price_supply", nullable = false)
-    public Integer getPriceSupply() {
-        return priceSupply;
+    @Column(name = "item_price_sell", nullable = false)
+    public int getItemPriceSell() {
+        return itemPriceSell;
     }
 
-    public void setPriceSupply(Integer priceSupply) {
-        this.priceSupply = priceSupply;
-    }
-
-    @Basic
-    @Column(name = "description", nullable = false, length = 1000)
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setItemPriceSell(int itemPriceSell) {
+        this.itemPriceSell = itemPriceSell;
     }
 
     @Basic
-    @Column(name = "size", nullable = false, length = 5)
-    public String getSize() {
-        return size;
+    @Column(name = "item_price_supply", nullable = false)
+    public int getItemPriceSupply() {
+        return itemPriceSupply;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setItemPriceSupply(int itemPriceSupply) {
+        this.itemPriceSupply = itemPriceSupply;
+    }
+
+    @Basic
+    @Column(name = "item_description", nullable = false, length = 1000)
+    public String getItemDescription() {
+        return itemDescription;
+    }
+
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
     }
 
     @Override
@@ -90,26 +70,43 @@ public class Tbitem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tbitem tbitem = (Tbitem) o;
-        return Objects.equals(id, tbitem.id) &&
-                Objects.equals(name, tbitem.name) &&
-                Objects.equals(stock, tbitem.stock) &&
-                Objects.equals(priceSell, tbitem.priceSell) &&
-                Objects.equals(priceSupply, tbitem.priceSupply) &&
-                Objects.equals(description, tbitem.description) &&
-                Objects.equals(size, tbitem.size);
+        return itemId == tbitem.itemId &&
+                itemPriceSell == tbitem.itemPriceSell &&
+                itemPriceSupply == tbitem.itemPriceSupply &&
+                Objects.equals(itemName, tbitem.itemName) &&
+                Objects.equals(itemDescription, tbitem.itemDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, stock, priceSell, priceSupply, description, size);
+        return Objects.hash(itemId, itemName, itemPriceSell, itemPriceSupply, itemDescription);
     }
 
-    @OneToMany(mappedBy = "tbitemByTbitemId")
-    public Collection<Tbtransaction> getTbtransactionsById() {
-        return tbtransactionsById;
+    @ManyToOne
+    @JoinColumn(name = "tbcategory_category_Id", referencedColumnName = "category_Id", nullable = false)
+    public Tbcategory getTbcategoryByTbcategoryCategoryId() {
+        return tbcategoryByTbcategoryCategoryId;
     }
 
-    public void setTbtransactionsById(Collection<Tbtransaction> tbtransactionsById) {
-        this.tbtransactionsById = tbtransactionsById;
+    public void setTbcategoryByTbcategoryCategoryId(Tbcategory tbcategoryByTbcategoryCategoryId) {
+        this.tbcategoryByTbcategoryCategoryId = tbcategoryByTbcategoryCategoryId;
+    }
+
+    @OneToMany(mappedBy = "tbitemByTbitemItemId")
+    public Collection<Tbsizestock> getTbsizestocksByItemId() {
+        return tbsizestocksByItemId;
+    }
+
+    public void setTbsizestocksByItemId(Collection<Tbsizestock> tbsizestocksByItemId) {
+        this.tbsizestocksByItemId = tbsizestocksByItemId;
+    }
+
+    @OneToMany(mappedBy = "tbitemByTbitemItemId")
+    public Collection<Tbtransaction> getTbtransactionsByItemId() {
+        return tbtransactionsByItemId;
+    }
+
+    public void setTbtransactionsByItemId(Collection<Tbtransaction> tbtransactionsByItemId) {
+        this.tbtransactionsByItemId = tbtransactionsByItemId;
     }
 }

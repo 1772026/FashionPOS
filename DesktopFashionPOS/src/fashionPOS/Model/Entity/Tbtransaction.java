@@ -6,62 +6,63 @@ import java.util.Objects;
 
 @Entity
 public class Tbtransaction {
-    private Integer id;
-    private Date tanggal;
-    private Integer status;
-    private Integer totalHarga;
-    private String tipePembayaran;
-    private Tbitem tbitemByTbitemId;
-    private Tbcustomer tbcustomerByTbcustomerId;
+    private int transactionId;
+    private Date transactionDate;
+    private int transactionStatus;
+    private int transactionTotalprice;
+    private String transactionPaymenttype;
+    private Tbcustomer tbcustomerByTbcustomerCustomerId;
+    private Tbitem tbitemByTbitemItemId;
+    private Tbuser tbuserByTbuserUserId;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
-        return id;
+    @Column(name = "transaction_id", nullable = false)
+    public int getTransactionId() {
+        return transactionId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "tanggal", nullable = false)
-    public Date getTanggal() {
-        return tanggal;
-    }
-
-    public void setTanggal(Date tanggal) {
-        this.tanggal = tanggal;
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
     }
 
     @Basic
-    @Column(name = "status", nullable = false)
-    public Integer getStatus() {
-        return status;
+    @Column(name = "transaction_date", nullable = false)
+    public Date getTransactionDate() {
+        return transactionDate;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    @Basic
-    @Column(name = "total_harga", nullable = false)
-    public Integer getTotalHarga() {
-        return totalHarga;
-    }
-
-    public void setTotalHarga(Integer totalHarga) {
-        this.totalHarga = totalHarga;
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
     @Basic
-    @Column(name = "tipe_pembayaran", nullable = false, length = 100)
-    public String getTipePembayaran() {
-        return tipePembayaran;
+    @Column(name = "transaction_status", nullable = false)
+    public int getTransactionStatus() {
+        return transactionStatus;
     }
 
-    public void setTipePembayaran(String tipePembayaran) {
-        this.tipePembayaran = tipePembayaran;
+    public void setTransactionStatus(int transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    }
+
+    @Basic
+    @Column(name = "transaction_totalprice", nullable = false)
+    public int getTransactionTotalprice() {
+        return transactionTotalprice;
+    }
+
+    public void setTransactionTotalprice(int transactionTotalprice) {
+        this.transactionTotalprice = transactionTotalprice;
+    }
+
+    @Basic
+    @Column(name = "transaction_paymenttype", nullable = false, length = 100)
+    public String getTransactionPaymenttype() {
+        return transactionPaymenttype;
+    }
+
+    public void setTransactionPaymenttype(String transactionPaymenttype) {
+        this.transactionPaymenttype = transactionPaymenttype;
     }
 
     @Override
@@ -69,35 +70,45 @@ public class Tbtransaction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tbtransaction that = (Tbtransaction) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(tanggal, that.tanggal) &&
-                Objects.equals(status, that.status) &&
-                Objects.equals(totalHarga, that.totalHarga) &&
-                Objects.equals(tipePembayaran, that.tipePembayaran);
+        return transactionId == that.transactionId &&
+                transactionStatus == that.transactionStatus &&
+                transactionTotalprice == that.transactionTotalprice &&
+                Objects.equals(transactionDate, that.transactionDate) &&
+                Objects.equals(transactionPaymenttype, that.transactionPaymenttype);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, tanggal, status, totalHarga, tipePembayaran);
+        return Objects.hash(transactionId, transactionDate, transactionStatus, transactionTotalprice, transactionPaymenttype);
     }
 
     @ManyToOne
-    @JoinColumn(name = "tbitem_id", referencedColumnName = "id", nullable = false)
-    public Tbitem getTbitemByTbitemId() {
-        return tbitemByTbitemId;
+    @JoinColumn(name = "tbcustomer_customer_id", referencedColumnName = "customer_id", nullable = false)
+    public Tbcustomer getTbcustomerByTbcustomerCustomerId() {
+        return tbcustomerByTbcustomerCustomerId;
     }
 
-    public void setTbitemByTbitemId(Tbitem tbitemByTbitemId) {
-        this.tbitemByTbitemId = tbitemByTbitemId;
+    public void setTbcustomerByTbcustomerCustomerId(Tbcustomer tbcustomerByTbcustomerCustomerId) {
+        this.tbcustomerByTbcustomerCustomerId = tbcustomerByTbcustomerCustomerId;
     }
 
     @ManyToOne
-    @JoinColumn(name = "tbcustomer_id", referencedColumnName = "id", nullable = false)
-    public Tbcustomer getTbcustomerByTbcustomerId() {
-        return tbcustomerByTbcustomerId;
+    @JoinColumn(name = "tbitem_item_id", referencedColumnName = "item_id", nullable = false)
+    public Tbitem getTbitemByTbitemItemId() {
+        return tbitemByTbitemItemId;
     }
 
-    public void setTbcustomerByTbcustomerId(Tbcustomer tbcustomerByTbcustomerId) {
-        this.tbcustomerByTbcustomerId = tbcustomerByTbcustomerId;
+    public void setTbitemByTbitemItemId(Tbitem tbitemByTbitemItemId) {
+        this.tbitemByTbitemItemId = tbitemByTbitemItemId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "tbuser_user_id", referencedColumnName = "user_id", nullable = false)
+    public Tbuser getTbuserByTbuserUserId() {
+        return tbuserByTbuserUserId;
+    }
+
+    public void setTbuserByTbuserUserId(Tbuser tbuserByTbuserUserId) {
+        this.tbuserByTbuserUserId = tbuserByTbuserUserId;
     }
 }
