@@ -1,6 +1,6 @@
 package fashionPOS.Controller;
 
-import fashionPOS.Model.Dao.LoginDao;
+import fashionPOS.Model.Dao.UserDao;
 import fashionPOS.Model.Entity.Tbuser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,10 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -20,21 +19,24 @@ import java.io.IOException;
 
 public class LoginController {
     public AnchorPane root;
-    private Stage homeStage;
-    private Stage self;
-    private LoginDao loginDao;
+    private Stage selfStage;
+    private UserDao loginDao;
+    private Tbuser tbuser;
     @FXML
     private PasswordField txtUsername;
     @FXML
     private TextField txtPassword;
 
-    public boolean getLogin(Tbuser user) {
-        return getLoginDao().login(user);
+    public Tbuser getLogin(Tbuser data){
+        if(tbuser == null){
+            tbuser=getLoginDao().getData(data);
+        }
+        return tbuser;
     }
 
-    public LoginDao getLoginDao() {
+    public UserDao getLoginDao() {
         if (loginDao == null) {
-            loginDao = new LoginDao();
+            loginDao = new UserDao();
         }
         return loginDao;
     }
@@ -44,35 +46,41 @@ public class LoginController {
         Tbuser tbuser = new Tbuser();
         tbuser.setUserName(txtUsername.getText().trim());
         tbuser.setUserPassword(txtPassword.getText().trim());
-        if (getLogin(tbuser)) {
+
+        FXMLLoader loader = new FXMLLoader();
+        selfStage = new Stage();
+        if (getLoginDao().getData(tbuser).getTbroleByTbroleRoleId().getRoleName().equals("admin")) {
             try {
-                FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/fashionPOS/View/homeAdmin.fxml"));
                 BorderPane pane = loader.load();
-//                HomeAdminController controller = loader.getController();
-//                controller.setMainFormController(this);
                 Scene scene = new Scene(pane);
-                homeStage = new Stage();
-                homeStage.setScene(scene);
-                homeStage.setTitle("Home");
-                homeStage.initModality(Modality.APPLICATION_MODAL);
+                selfStage.setScene(scene);
+                selfStage.setTitle("Home Admin");
+                selfStage.initModality(Modality.APPLICATION_MODAL);
 
-                ((Stage)root.getScene().getWindow() ).close();
+                ((Stage) root.getScene().getWindow()).close();
             } catch (IOException e) {
                 e.printStackTrace();
-
             }
-            homeStage.show();
+            selfStage.show();
+        } else if (getLoginDao().getData(tbuser).getTbroleByTbroleRoleId().getRoleName().equals("kasir")) {
+            try {
+                loader.setLocation(getClass().getResource("/fashionPOS/View/point_of_sales.fxml"));
+                VBox pane = loader.load();
+                Scene scene = new Scene(pane);
+                selfStage.setScene(scene);
+                selfStage.setTitle("POS");
+                selfStage.initModality(Modality.APPLICATION_MODAL);
+
+                ((Stage) root.getScene().getWindow()).close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            selfStage.show();
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Username or Password is Wrong!");
             a.show();
-        }
-    }
-
-    @FXML
-    private void keyListener(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER) {
         }
     }
 }
