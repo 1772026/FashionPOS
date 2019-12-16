@@ -32,7 +32,6 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <Hyperlink layoutX="248.0" layoutY="350.0" text="Forgot Password?" />
             <ImageView fitHeight="117.0" fitWidth="208.0" layoutX="132.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.9;">
                <image>
                   <Image url="@../Img/gif.gif" />
