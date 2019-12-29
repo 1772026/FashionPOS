@@ -39,7 +39,7 @@ public class HomeAdminController {
     public void actionFormUser(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fashionPOS/View/user.fxml"));
+            loader.setLocation(getClass().getResource("/fashionPOS/View/add_user.fxml"));
             AnchorPane pane = loader.load();
 //                HomeAdminController controller = loader.getController();
 //                controller.setMainFormController(this);
