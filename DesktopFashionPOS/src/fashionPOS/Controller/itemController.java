@@ -118,6 +118,7 @@ public class itemController implements Initializable {
             a.setContentText("Duplicate Item Name");
             a.showAndWait();
         }
+        tableItem.refresh();
     }
 
     @FXML
@@ -146,6 +147,7 @@ public class itemController implements Initializable {
             a.setContentText("Duplicate Item Name");
             a.showAndWait();
         }
+        tableItem.refresh();
     }
 
     @FXML
@@ -154,6 +156,7 @@ public class itemController implements Initializable {
         item.setItemId(Integer.parseInt(txtid.getText()));
         getItemDao().updateData(item);
         clearForm();
+        tableItem.refresh();
     }
 
     @FXML
