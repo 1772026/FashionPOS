@@ -65,21 +65,36 @@ public class itemController implements Initializable {
     private ObservableList<Tbitem> getTbItems() {
         if (tbItems == null) {
             tbItems = FXCollections.observableArrayList();
-            tbItems.addAll(itemDao.getAllData());
+            tbItems.addAll(getItemDao().getAllData());
         }
         return tbItems;
     }
 
-    public ObservableList<Tbcategory> getCategories() {
+    private ItemDao getItemDao() {
+        if (itemDao == null) {
+            itemDao = new ItemDao();
+        }
+        return itemDao;
+    }
+
+    private ObservableList<Tbcategory> getCategories() {
         if (tbCategories == null) {
             tbCategories = FXCollections.observableArrayList();
-            tbCategories.addAll(categoryDao.getAllData());
+            tbCategories.addAll(getCategoryDao().getAllData());
         }
         return tbCategories;
     }
 
+    private CategoryDao getCategoryDao() {
+        if (categoryDao == null) {
+            categoryDao = new CategoryDao();
+        }
+        return categoryDao;
+    }
+
     @FXML
     private void categoryClick(MouseEvent mouseEvent) {
+
     }
 
     @FXML
@@ -99,19 +114,18 @@ public class itemController implements Initializable {
 
         boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName() == item.getItemName());
         if (notDuplicate) {
-            itemDao.addData(item);
-            clearForm();
+            getItemDao().addData(item);
             tableItem.refresh();
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Duplicate Item Name");
             a.showAndWait();
         }
+        tableItem.refresh();
     }
 
     @FXML
     private void reset(ActionEvent actionEvent) {
-        clearForm();
     }
 
     @FXML
@@ -130,11 +144,10 @@ public class itemController implements Initializable {
         item.setItemDescription(txtDescription.getText());
         item.setTbcategoryByTbcategoryCategoryId(category);
 
-        boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName() == item.getItemName());
+        boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName().equals(item.getItemName()));
         if (selected.getItemName() != txtid.getText()) {
             if (notDuplicate) {
                 itemDao.updateData(item);
-                clearForm();
                 tableItem.refresh();
             } else {
                 Alert a = new Alert(Alert.AlertType.ERROR);
@@ -142,6 +155,15 @@ public class itemController implements Initializable {
                 a.showAndWait();
             }
         }
+        tableItem.refresh();
+//        if (notDuplicate) {
+//            getItemDao().updateData(item);
+//        } else {
+//            Alert a = new Alert(Alert.AlertType.ERROR);
+//            a.setContentText("Duplicate Item Name");
+//            a.showAndWait();
+//
+//        }
     }
 
     @FXML
@@ -153,6 +175,7 @@ public class itemController implements Initializable {
         category.setCategoryType(comboCategory.getSelectionModel().getSelectedItem().getCategoryType());
 
         item.setItemId(Integer.parseInt(txtid.getText()));
+        getItemDao().updateData(item);
         item.setItemName(txtName.getText().trim());
         item.setItemPriceSell(Integer.parseInt(txtPriceSell.getText().trim()));
         item.setItemPriceSupply(Integer.parseInt(txtPriceBuy.getText().trim()));

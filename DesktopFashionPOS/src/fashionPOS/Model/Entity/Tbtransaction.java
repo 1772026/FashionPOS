@@ -108,7 +108,7 @@ public class Tbtransaction {
     }
 
     @ManyToOne
-    @JoinColumn(name = "tbcustomer_customer_id", referencedColumnName = "customer_id", nullable = false)
+    @JoinColumn(name = "tbcustomer_customer_id", referencedColumnName = "customer_id")
     public Tbcustomer getTbcustomerByTbcustomerCustomerId() {
         return tbcustomerByTbcustomerCustomerId;
     }
@@ -138,7 +138,7 @@ public class Tbtransaction {
     }
 
     @ManyToOne
-    @JoinColumn(name = "tbRetur_retur_id", referencedColumnName = "retur_id", nullable = false)
+    @JoinColumn(name = "tbRetur_retur_id", referencedColumnName = "retur_id")
     public Tbretur getTbreturByTbReturReturId() {
         return tbreturByTbReturReturId;
     }
