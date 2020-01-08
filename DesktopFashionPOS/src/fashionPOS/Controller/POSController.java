@@ -130,6 +130,7 @@ public class POSController implements Initializable {
 
     private Tbitem clickItem;
     private Tbtransaction clickTrans;
+    private int idxTrans;
 
     @FXML
     private void itemClick(MouseEvent mouseEvent) {
@@ -138,7 +139,9 @@ public class POSController implements Initializable {
 
     @FXML
     private void transaksiClick(MouseEvent mouseEvent) {
+
         clickTrans = tableTrf.getSelectionModel().getSelectedItem();
+        idxTrans = tableTrf.getSelectionModel().getSelectedIndex();
     }
 
     @FXML
@@ -160,32 +163,85 @@ public class POSController implements Initializable {
 
     }
 
+    private ObservableList<Tbitem> cad=FXCollections.observableArrayList();
+    private List<Tbitem> data = new ArrayList<Tbitem>();
+
     @FXML
     private void baju(ActionEvent actionEvent) {
+        data.clear();
+        for (Tbitem i : getTbitems()) {
+            if (i.getTbcategoryByTbcategoryCategoryId().getCategoryType().equals(baju.getText())) {
+                data.add(i);
+            }
+        }
+        cad.setAll(data);
+        tableItem.setItems(cad);
     }
 
     @FXML
     private void celana(ActionEvent actionEvent) {
+        data.clear();
+        for (Tbitem i : getTbitems()) {
+            if (i.getTbcategoryByTbcategoryCategoryId().getCategoryType().equals(celana.getText())) {
+                data.add(i);
+            }
+        }
+        cad.setAll(data);
+        tableItem.setItems(cad);
     }
 
     @FXML
     private void kauskaki(ActionEvent actionEvent) {
+        data.clear();
+        for (Tbitem i : getTbitems()) {
+            if (i.getTbcategoryByTbcategoryCategoryId().getCategoryType().equals(kaoskaki.getText())) {
+                data.add(i);
+            }
+        }
+        cad.setAll(data);
+        tableItem.setItems(cad);
     }
 
     @FXML
     private void sepatu(ActionEvent actionEvent) {
+        data.clear();
+        for (Tbitem i : getTbitems()) {
+            if (i.getTbcategoryByTbcategoryCategoryId().getCategoryType().equals(sepatu.getText())) {
+                data.add(i);
+            }
+        }
+        cad.setAll(data);
+        tableItem.setItems(cad);
     }
 
     @FXML
     private void sandal(ActionEvent actionEvent) {
+        data.clear();
+        for (Tbitem i : getTbitems()) {
+            if (i.getTbcategoryByTbcategoryCategoryId().getCategoryType().equals(sandal.getText())) {
+                data.add(i);
+            }
+        }
+        cad.setAll(data);
+        tableItem.setItems(cad);
     }
 
     @FXML
     private void other(ActionEvent actionEvent) {
+        data.clear();
+        for (Tbitem i : getTbitems()) {
+            if (i.getTbcategoryByTbcategoryCategoryId().getCategoryType().equals(other.getText())) {
+                data.add(i);
+            }
+        }
+        cad.setAll(data);
+        tableItem.setItems(cad);
     }
 
     @FXML
     private void showall(ActionEvent actionEvent) {
+        data.clear();
+        tableItem.setItems(getTbitems());
     }
 
     private SimpleDateFormat simpleDateFormat;
@@ -195,7 +251,7 @@ public class POSController implements Initializable {
     private void add(ActionEvent actionEvent) {
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("Input QTY");
-        dialog.setContentText("Masukkan Jumlah Qty Makanan:");
+        dialog.setContentText("Masukkan Jumlah Qty:");
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent() && !result.get().equals("") && !(Integer.parseInt(result.get()) == 0)) {
             Tbtransaction data = new Tbtransaction();
@@ -242,12 +298,24 @@ public class POSController implements Initializable {
 
     @FXML
     private void update(ActionEvent actionEvent) {
-        if (cli)
+        if (clickTrans != null && !listTransaksi.isEmpty()) {
+            TextInputDialog dialog = new TextInputDialog("");
+            dialog.setTitle("Ubah QTY");
+            dialog.setContentText("Masukkan Jumlah Qty:");
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent() && !result.get().equals("") && !(Integer.parseInt(result.get()) == 0)) {
+                clickTrans.setQty(Integer.valueOf(result.get()));
+                listTransaksi.set(idxTrans, clickTrans);
+                penampungListTransaksi.setAll(listTransaksi);
+                tableTrf.refresh();
+            }
+        }
     }
 
     @FXML
     private void delete(ActionEvent actionEvent) {
         if (clickTrans != null && !listTransaksi.isEmpty()) {
+
             listTransaksi.remove(clickTrans);
             penampungListTransaksi.setAll(listTransaksi);
             tableTrf.refresh();
@@ -264,7 +332,7 @@ public class POSController implements Initializable {
                 disc.setSelected(false);
             } else {
                 tax.setText(convIDR(NetAmo * 0.1));
-                Double Hasil = NetAmo *0.9;
+                Double Hasil = NetAmo * 0.9;
                 totalNet.setText(convIDR(Hasil));
             }
         } else {

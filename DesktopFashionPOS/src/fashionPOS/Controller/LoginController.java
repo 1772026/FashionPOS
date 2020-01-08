@@ -57,7 +57,7 @@ public class LoginController {
                 selfStage.setScene(scene);
                 selfStage.setTitle("Home Admin");
                 selfStage.initModality(Modality.APPLICATION_MODAL);
-
+                selfStage.setResizable(false);
                 ((Stage) root.getScene().getWindow()).close();
             } catch (IOException e) {
                 e.printStackTrace();

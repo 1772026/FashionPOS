@@ -8,13 +8,15 @@ import java.util.Objects;
 public class Tbtransaction {
     private int transactionId;
     private Date transactionDate;
-    private int transactionStatus;
-    private int transactionTotalprice;
+    private Integer transactionStatus;
+    private Integer transactionTotalprice;
     private String transactionPaymenttype;
     private Integer qty;
+    private Integer transactionReturStatus;
     private Tbcustomer tbcustomerByTbcustomerCustomerId;
     private Tbitem tbitemByTbitemItemId;
     private Tbuser tbuserByTbuserUserId;
+    private Tbretur tbreturByTbReturReturId;
 
     @Id
     @Column(name = "transaction_id", nullable = false)
@@ -27,7 +29,7 @@ public class Tbtransaction {
     }
 
     @Basic
-    @Column(name = "transaction_date", nullable = false)
+    @Column(name = "transaction_date", nullable = true)
     public Date getTransactionDate() {
         return transactionDate;
     }
@@ -37,27 +39,27 @@ public class Tbtransaction {
     }
 
     @Basic
-    @Column(name = "transaction_status", nullable = false)
-    public int getTransactionStatus() {
+    @Column(name = "transaction_status", nullable = true)
+    public Integer getTransactionStatus() {
         return transactionStatus;
     }
 
-    public void setTransactionStatus(int transactionStatus) {
+    public void setTransactionStatus(Integer transactionStatus) {
         this.transactionStatus = transactionStatus;
     }
 
     @Basic
-    @Column(name = "transaction_totalprice", nullable = false)
-    public int getTransactionTotalprice() {
+    @Column(name = "transaction_totalprice", nullable = true)
+    public Integer getTransactionTotalprice() {
         return transactionTotalprice;
     }
 
-    public void setTransactionTotalprice(int transactionTotalprice) {
+    public void setTransactionTotalprice(Integer transactionTotalprice) {
         this.transactionTotalprice = transactionTotalprice;
     }
 
     @Basic
-    @Column(name = "transaction_paymenttype", nullable = false, length = 100)
+    @Column(name = "transaction_paymenttype", nullable = true, length = 100)
     public String getTransactionPaymenttype() {
         return transactionPaymenttype;
     }
@@ -76,22 +78,33 @@ public class Tbtransaction {
         this.qty = qty;
     }
 
+    @Basic
+    @Column(name = "transaction_retur_status", nullable = true)
+    public Integer getTransactionReturStatus() {
+        return transactionReturStatus;
+    }
+
+    public void setTransactionReturStatus(Integer transactionReturStatus) {
+        this.transactionReturStatus = transactionReturStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tbtransaction that = (Tbtransaction) o;
         return transactionId == that.transactionId &&
-                transactionStatus == that.transactionStatus &&
-                transactionTotalprice == that.transactionTotalprice &&
                 Objects.equals(transactionDate, that.transactionDate) &&
+                Objects.equals(transactionStatus, that.transactionStatus) &&
+                Objects.equals(transactionTotalprice, that.transactionTotalprice) &&
                 Objects.equals(transactionPaymenttype, that.transactionPaymenttype) &&
-                Objects.equals(qty, that.qty);
+                Objects.equals(qty, that.qty) &&
+                Objects.equals(transactionReturStatus, that.transactionReturStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, transactionDate, transactionStatus, transactionTotalprice, transactionPaymenttype, qty);
+        return Objects.hash(transactionId, transactionDate, transactionStatus, transactionTotalprice, transactionPaymenttype, qty, transactionReturStatus);
     }
 
     @ManyToOne
@@ -122,5 +135,15 @@ public class Tbtransaction {
 
     public void setTbuserByTbuserUserId(Tbuser tbuserByTbuserUserId) {
         this.tbuserByTbuserUserId = tbuserByTbuserUserId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "tbRetur_retur_id", referencedColumnName = "retur_id", nullable = false)
+    public Tbretur getTbreturByTbReturReturId() {
+        return tbreturByTbReturReturId;
+    }
+
+    public void setTbreturByTbReturReturId(Tbretur tbreturByTbReturReturId) {
+        this.tbreturByTbReturReturId = tbreturByTbReturReturId;
     }
 }

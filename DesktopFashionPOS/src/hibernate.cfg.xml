@@ -5,8 +5,8 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.url">jdbc:mysql://localhost:3306/dbfashion</property>
+         <property name="connection.username">root</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-                <property name="connection.username">root</property>
         <mapping class="fashionPOS.Model.Entity.Tbcustomer"/>
         <mapping class="fashionPOS.Model.Entity.Tbitem"/>
         <mapping class="fashionPOS.Model.Entity.Tbtransaction"/>
@@ -14,7 +14,8 @@
         <mapping class="fashionPOS.Model.Entity.Tbcategory"/>
         <mapping class="fashionPOS.Model.Entity.Tbrole"/>
         <mapping class="fashionPOS.Model.Entity.Tbsizestock"/>
-        <!--        <property name="connection.username">root</property>-->
+        <mapping class="fashionPOS.Model.Entity.Tbretur"/>
+        <!-- <property name="connection.username">root</property>-->
         <!-- <property name="connection.password"/> -->
 
         <!-- DB schema will be updated if needed -->
