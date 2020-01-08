@@ -163,7 +163,7 @@ public class POSController implements Initializable {
 
     }
 
-    private ObservableList<Tbitem> cad=FXCollections.observableArrayList();
+    private ObservableList<Tbitem> cad = FXCollections.observableArrayList();
     private List<Tbitem> data = new ArrayList<Tbitem>();
 
     @FXML
@@ -270,6 +270,17 @@ public class POSController implements Initializable {
 
     }
 
+    private void internalModelPesanan() {
+        NetAmo = 0.0;
+        for (Tbtransaction i : listTransaksi) {
+            NetAmo += i.getTransactionTotalprice() * i.getQty();
+        }
+        net.setText(String.valueOf(convIDR(NetAmo)));
+        Double Hasil = NetAmo + Double.parseDouble(tax.getText().equals("") ? "0" : tax.getText());
+
+        totalNet.setText(convIDR(Hasil));
+    }
+
     private List<Tbtransaction> listTransaksi = new ArrayList<Tbtransaction>();
     private ObservableList<Tbtransaction> penampungListTransaksi = FXCollections.observableArrayList();
     private Double NetAmo;
@@ -285,16 +296,6 @@ public class POSController implements Initializable {
         return kursIndonesia.format(harga);
     }
 
-    private void internalModelPesanan() {
-        NetAmo = 0.0;
-        for (Tbtransaction i : listTransaksi) {
-            NetAmo += i.getTransactionTotalprice() * i.getQty();
-        }
-        net.setText(String.valueOf(convIDR(NetAmo)));
-        Double Hasil = NetAmo + Double.parseDouble(tax.getText().equals("") ? "0" : tax.getText());
-
-        totalNet.setText(convIDR(Hasil));
-    }
 
     @FXML
     private void update(ActionEvent actionEvent) {
@@ -308,6 +309,7 @@ public class POSController implements Initializable {
                 listTransaksi.set(idxTrans, clickTrans);
                 penampungListTransaksi.setAll(listTransaksi);
                 tableTrf.refresh();
+                internalModelPesanan();
             }
         }
     }
@@ -319,6 +321,7 @@ public class POSController implements Initializable {
             listTransaksi.remove(clickTrans);
             penampungListTransaksi.setAll(listTransaksi);
             tableTrf.refresh();
+            internalModelPesanan();
         }
     }
 
