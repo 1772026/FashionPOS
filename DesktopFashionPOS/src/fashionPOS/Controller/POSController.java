@@ -157,8 +157,7 @@ public class POSController implements Initializable {
                     i.setTransactionDate(now);
                     i.setTransactionStatus(1);
                     i.setTbuserByTbuserUserId(pelaku);
-//                    getTransaksiDao().addData(i);
-                    System.out.println(i.getTransactionId());
+                    getTransaksiDao().addData(i);
                 }
             }
         }
