@@ -68,6 +68,8 @@ public class LoginController {
                 loader.setLocation(getClass().getResource("/fashionPOS/View/point_of_sales.fxml"));
                 AnchorPane pane = loader.load();
                 Scene scene = new Scene(pane);
+                POSController controller = loader.getController();
+                controller.setMainFormController( getLoginDao().getData(tbuser) );
                 selfStage.setScene(scene);
                 selfStage.setTitle("POS");
                 selfStage.initModality(Modality.APPLICATION_MODAL);

@@ -30,11 +30,11 @@ public class TransaksiDao implements DaoServiceCRUD<Tbtransaction> {
 
     @Override
     public List<Tbtransaction> getAllData() {
-        List<Tbtransaction> tbusers = new ArrayList<>();
+        List<Tbtransaction> tbtransactions = new ArrayList<>();
         Session session = HibernateUtil.getSession();
         Criteria criteria = session.createCriteria(Tbtransaction.class);
-        tbusers.addAll(criteria.list());
-        return null;
+        tbtransactions.addAll(criteria.list());
+        return tbtransactions;
     }
 
     @Override

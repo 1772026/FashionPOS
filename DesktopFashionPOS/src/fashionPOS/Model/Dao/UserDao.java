@@ -34,7 +34,7 @@ public class UserDao implements DaoServiceCRUD<Tbuser> {
         Session session = HibernateUtil.getSession();
         Criteria criteria = session.createCriteria(Tbuser.class);
         tbusers.addAll(criteria.list());
-        return null;
+        return tbusers;
     }
 
     @Override
