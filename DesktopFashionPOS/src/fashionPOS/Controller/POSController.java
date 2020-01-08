@@ -5,6 +5,7 @@ import fashionPOS.Model.Dao.TransaksiDao;
 import fashionPOS.Model.Entity.Tbitem;
 import fashionPOS.Model.Entity.Tbtransaction;
 import fashionPOS.Model.Entity.Tbuser;
+import fashionPOS.Util.DBHelper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,9 +19,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -80,7 +86,38 @@ public class POSController implements Initializable {
     private TextField kembali;
     @FXML
     private TextField bayar;
+    private Tbuser pelaku;
 
+    private ObservableList<Tbtransaction> tbtransactions;
+    private TransaksiDao transaksiDao;
+    private Tbitem clickItem;
+    private Tbtransaction clickTrans;
+    private int idxTrans;
+    private ObservableList<Tbitem> cad = FXCollections.observableArrayList();
+    private List<Tbitem> data = new ArrayList<Tbitem>();
+    private SimpleDateFormat simpleDateFormat;
+    private Date dateNow;
+    private Double Hasil = 0.0;
+    private List<Tbtransaction> listTransaksi = new ArrayList<Tbtransaction>();
+    private ObservableList<Tbtransaction> penampungListTransaksi = FXCollections.observableArrayList();
+    private Double NetAmo;
+
+    private void reset() {
+        net.clear();
+        tax.clear();
+        net.clear();
+        bayar.clear();
+        kembali.clear();
+        NetAmo = 0.0;
+        penampungListTransaksi.clear();
+        listTransaksi.clear();
+        Hasil = 0.0;
+        data.clear();
+        cad.clear();
+        idxTrans = 0;
+        tbtransactions.clear();
+        tableTrf.setItems(tbtransactions);
+    }
 
     private ObservableList<Tbitem> getTbitems() {
         if (tbitems == null) {
@@ -97,9 +134,6 @@ public class POSController implements Initializable {
         return itemDao;
     }
 
-    private ObservableList<Tbtransaction> tbtransactions;
-    private TransaksiDao transaksiDao;
-
     private ObservableList<Tbtransaction> getTbtransactions() {
         if (tbtransactions == null) {
             tbtransactions = FXCollections.observableArrayList();
@@ -114,11 +148,6 @@ public class POSController implements Initializable {
         }
         return transaksiDao;
     }
-
-
-    private Tbitem clickItem;
-    private Tbtransaction clickTrans;
-    private int idxTrans;
 
     @FXML
     private void itemClick(MouseEvent mouseEvent) {
@@ -152,23 +181,20 @@ public class POSController implements Initializable {
                 Date now = new Date();
                 kembali.setText(convIDR(Double.parseDouble(bayar.getText()) - Hasil));
                 Tbtransaction data = new Tbtransaction();
+                int id = getTbtransactions().size() + 1;
                 for (Tbtransaction i : listTransaksi) {
-                    i.setTransactionId(getTbtransactions().size() + 1);
+                    i.setTransactionId(id);
                     i.setTransactionDate(now);
                     i.setTransactionStatus(1);
                     i.setTbuserByTbuserUserId(pelaku);
                     getTransaksiDao().addData(i);
+                    id++;
                 }
+                reset();
             }
         }
     }
 
-    public void reset() {
-        tbitems.clear();
-        tbtransactions.clear();
-        tableItem.setItems(tbitems);
-        tableTrf.setItems(tbtransactions);
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -181,11 +207,7 @@ public class POSController implements Initializable {
         colPice.setCellValueFactory(d -> new SimpleStringProperty(String.valueOf(d.getValue().getTransactionTotalprice())));
         colQty.setCellValueFactory(d -> new SimpleStringProperty(String.valueOf(d.getValue().getQty())));
 
-
     }
-
-    private ObservableList<Tbitem> cad = FXCollections.observableArrayList();
-    private List<Tbitem> data = new ArrayList<Tbitem>();
 
     @FXML
     private void baju(ActionEvent actionEvent) {
@@ -265,8 +287,6 @@ public class POSController implements Initializable {
         tableItem.setItems(getTbitems());
     }
 
-    private SimpleDateFormat simpleDateFormat;
-    private Date dateNow;
 
     @FXML
     private void add(ActionEvent actionEvent) {
@@ -291,7 +311,6 @@ public class POSController implements Initializable {
 
     }
 
-    private Double Hasil = 0.0;
 
     private void internalModelPesanan() {
         NetAmo = 0.0;
@@ -304,9 +323,6 @@ public class POSController implements Initializable {
         totalNet.setText(convIDR(Hasil));
     }
 
-    private List<Tbtransaction> listTransaksi = new ArrayList<Tbtransaction>();
-    private ObservableList<Tbtransaction> penampungListTransaksi = FXCollections.observableArrayList();
-    private Double NetAmo;
 
     private String convIDR(Double harga) {
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
@@ -364,18 +380,17 @@ public class POSController implements Initializable {
                 disc.setSelected(false);
             } else {
                 tax.setText(convIDR(NetAmo * 0.1));
-                Double Hasil = NetAmo * 0.9;
+                Hasil = NetAmo * 1.1;
                 totalNet.setText(convIDR(Hasil));
             }
         } else {
-            Double Hasil = NetAmo;
+            Hasil = NetAmo;
             totalNet.setText(convIDR(Hasil));
             tax.setText("");
         }
 
     }
 
-    private Tbuser pelaku;
 
     public void setMainFormController(Tbuser pelaku) {
         this.pelaku = pelaku;

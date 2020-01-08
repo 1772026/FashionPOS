@@ -58,8 +58,8 @@ public class itemController implements Initializable {
     private Tbitem selected;
     private ObservableList<Tbitem> tbItems;
     private ObservableList<Tbcategory> tbCategories;
-    private ItemDao itemDao = new ItemDao();
-    private CategoryDao categoryDao = new CategoryDao();
+    private ItemDao itemDao ;
+    private CategoryDao categoryDao ;
 
 
     private ObservableList<Tbitem> getTbItems() {
@@ -156,14 +156,6 @@ public class itemController implements Initializable {
             }
         }
         tableItem.refresh();
-//        if (notDuplicate) {
-//            getItemDao().updateData(item);
-//        } else {
-//            Alert a = new Alert(Alert.AlertType.ERROR);
-//            a.setContentText("Duplicate Item Name");
-//            a.showAndWait();
-//
-//        }
     }
 
     @FXML
