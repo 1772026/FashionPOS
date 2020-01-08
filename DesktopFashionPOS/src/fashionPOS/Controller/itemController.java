@@ -65,21 +65,36 @@ public class itemController implements Initializable {
     private ObservableList<Tbitem> getTbItems() {
         if (tbItems == null) {
             tbItems = FXCollections.observableArrayList();
-            tbItems.addAll(itemDao.getAllData());
+            tbItems.addAll(getItemDao().getAllData());
         }
         return tbItems;
     }
 
-    public ObservableList<Tbcategory> getCategories() {
+    private ItemDao getItemDao() {
+        if (itemDao == null) {
+            itemDao = new ItemDao();
+        }
+        return itemDao;
+    }
+
+    private ObservableList<Tbcategory> getCategories() {
         if (tbCategories == null) {
             tbCategories = FXCollections.observableArrayList();
-            tbCategories.addAll(categoryDao.getAllData());
+            tbCategories.addAll(getCategoryDao().getAllData());
         }
         return tbCategories;
     }
 
+    private CategoryDao getCategoryDao() {
+        if (categoryDao == null) {
+            categoryDao = new CategoryDao();
+        }
+        return categoryDao;
+    }
+
     @FXML
     private void categoryClick(MouseEvent mouseEvent) {
+
     }
 
     @FXML
@@ -96,7 +111,7 @@ public class itemController implements Initializable {
         boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName() == item.getItemName());
 
         if (notDuplicate) {
-            itemDao.addData(item);
+            getItemDao().addData(item);
             clearForm();
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -124,7 +139,7 @@ public class itemController implements Initializable {
         item.setTbcategoryByTbcategoryCategoryId(category);
         boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName() == item.getItemName());
         if (notDuplicate) {
-            itemDao.updateData(item);
+            getItemDao().updateData(item);
             clearForm();
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -137,7 +152,7 @@ public class itemController implements Initializable {
     private void delete(ActionEvent actionEvent) {
         Tbitem item = new Tbitem();
         item.setItemId(Integer.parseInt(txtid.getText()));
-        itemDao.updateData(item);
+        getItemDao().updateData(item);
         clearForm();
     }
 
@@ -169,7 +184,7 @@ public class itemController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableItem.setItems(getTbItems());
-//        comboCategory.setItems(getCategories());
+        comboCategory.setItems(getCategories());
         colID.setCellValueFactory(data ->
                 new SimpleStringProperty(String.valueOf(data.getValue().getItemId())));
         colName.setCellValueFactory(data ->

@@ -1557,7 +1557,6 @@
     <column id="379" parent="338" name="tbcustomer_customer_id">
       <Position>6</Position>
       <DataType>int(10)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="380" parent="338" name="tbitem_item_id">
@@ -1580,7 +1579,6 @@
     <column id="383" parent="338" name="tbRetur_retur_id">
       <Position>10</Position>
       <DataType>int(10)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="384" parent="338" name="transaction_retur_status">
