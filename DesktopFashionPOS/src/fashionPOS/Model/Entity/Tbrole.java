@@ -1,14 +1,15 @@
 package fashionPOS.Model.Entity;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Tbrole {
     private int roleId;
     private String roleName;
-    private Collection<Tbuser> tbusersByRoleId;
 
     @Id
     @Column(name = "role_id", nullable = false)
@@ -42,14 +43,5 @@ public class Tbrole {
     @Override
     public int hashCode() {
         return Objects.hash(roleId, roleName);
-    }
-
-    @OneToMany(mappedBy = "tbroleByTbroleRoleId")
-    public Collection<Tbuser> getTbusersByRoleId() {
-        return tbusersByRoleId;
-    }
-
-    public void setTbusersByRoleId(Collection<Tbuser> tbusersByRoleId) {
-        this.tbusersByRoleId = tbusersByRoleId;
     }
 }

@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 public class Tbsizestock {
-    private int sizestockId;
+    private int tbitemItemId;
     private int sizestockSStock;
     private int sizestockMStock;
     private int sizestockLStock;
@@ -15,13 +15,13 @@ public class Tbsizestock {
     private Tbitem tbitemByTbitemItemId;
 
     @Id
-    @Column(name = "sizestock_id", nullable = false)
-    public int getSizestockId() {
-        return sizestockId;
+    @Column(name = "tbitem_item_id", nullable = false)
+    public int getTbitemItemId() {
+        return tbitemItemId;
     }
 
-    public void setSizestockId(int sizestockId) {
-        this.sizestockId = sizestockId;
+    public void setTbitemItemId(int tbitemItemId) {
+        this.tbitemItemId = tbitemItemId;
     }
 
     @Basic
@@ -89,7 +89,7 @@ public class Tbsizestock {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tbsizestock that = (Tbsizestock) o;
-        return sizestockId == that.sizestockId &&
+        return tbitemItemId == that.tbitemItemId &&
                 sizestockSStock == that.sizestockSStock &&
                 sizestockMStock == that.sizestockMStock &&
                 sizestockLStock == that.sizestockLStock &&
@@ -100,10 +100,10 @@ public class Tbsizestock {
 
     @Override
     public int hashCode() {
-        return Objects.hash(sizestockId, sizestockSStock, sizestockMStock, sizestockLStock, sizestockXlStock, sizestockXxlStock, sizestockXxxlStock);
+        return Objects.hash(tbitemItemId, sizestockSStock, sizestockMStock, sizestockLStock, sizestockXlStock, sizestockXxlStock, sizestockXxxlStock);
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "tbitem_item_id", referencedColumnName = "item_id", nullable = false)
     public Tbitem getTbitemByTbitemItemId() {
         return tbitemByTbitemItemId;

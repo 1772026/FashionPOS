@@ -1,14 +1,15 @@
 package fashionPOS.Model.Entity;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Tbcategory {
     private int categoryId;
     private String categoryType;
-    private Collection<Tbitem> tbitemsByCategoryId;
 
     @Id
     @Column(name = "category_Id", nullable = false)
@@ -42,14 +43,5 @@ public class Tbcategory {
     @Override
     public int hashCode() {
         return Objects.hash(categoryId, categoryType);
-    }
-
-    @OneToMany(mappedBy = "tbcategoryByTbcategoryCategoryId")
-    public Collection<Tbitem> getTbitemsByCategoryId() {
-        return tbitemsByCategoryId;
-    }
-
-    public void setTbitemsByCategoryId(Collection<Tbitem> tbitemsByCategoryId) {
-        this.tbitemsByCategoryId = tbitemsByCategoryId;
     }
 }

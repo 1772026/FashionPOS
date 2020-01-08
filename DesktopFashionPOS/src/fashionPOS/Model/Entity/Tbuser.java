@@ -1,7 +1,6 @@
 package fashionPOS.Model.Entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -10,7 +9,6 @@ public class Tbuser {
     private String userUsername;
     private String userPassword;
     private String userName;
-    private Collection<Tbtransaction> tbtransactionsByUserId;
     private Tbrole tbroleByTbroleRoleId;
 
     @Id
@@ -67,15 +65,6 @@ public class Tbuser {
     @Override
     public int hashCode() {
         return Objects.hash(userId, userUsername, userPassword, userName);
-    }
-
-    @OneToMany(mappedBy = "tbuserByTbuserUserId")
-    public Collection<Tbtransaction> getTbtransactionsByUserId() {
-        return tbtransactionsByUserId;
-    }
-
-    public void setTbtransactionsByUserId(Collection<Tbtransaction> tbtransactionsByUserId) {
-        this.tbtransactionsByUserId = tbtransactionsByUserId;
     }
 
     @ManyToOne

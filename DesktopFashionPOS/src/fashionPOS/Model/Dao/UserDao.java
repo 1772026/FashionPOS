@@ -15,14 +15,14 @@ public class UserDao implements DaoServiceCRUD<Tbuser> {
 
     @Override
     public int addData(Tbuser object) {
-        int result=0;
-        Session session=HibernateUtil.getSession();
-        Transaction transaction=session.beginTransaction();
+        int result = 0;
+        Session session = HibernateUtil.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
             session.save(object);
             transaction.commit();
-            result=1;
-        }catch (HibernateException e){
+            result = 1;
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         return result;
@@ -30,23 +30,24 @@ public class UserDao implements DaoServiceCRUD<Tbuser> {
 
     @Override
     public List<Tbuser> getAllData() {
-        List<Tbuser> tbusers=new ArrayList<>();
-        Session session=HibernateUtil.getSession();
-        Criteria criteria=session.createCriteria(Tbuser.class);
+        List<Tbuser> tbusers = new ArrayList<>();
+        Session session = HibernateUtil.getSession();
+        Criteria criteria = session.createCriteria(Tbuser.class);
         tbusers.addAll(criteria.list());
         return null;
     }
 
     @Override
     public Tbuser getData(Tbuser object) {
-        List<Tbuser> tbusers=new ArrayList<>();
-        Tbuser isidata=new Tbuser();
-        Session session=HibernateUtil.getSession();
-        Criteria criteria=session.createCriteria(Tbuser.class);
+        Session session = HibernateUtil.getSession();
+
+        Criteria criteria = session.createCriteria(Tbuser.class);
+        List<Tbuser> tbusers = new ArrayList<>();
         tbusers.addAll(criteria.list());
-        for(Tbuser data: tbusers){
-            if(data.getUserUsername().equals(object.getUserName())){
-                isidata=data;
+        Tbuser isidata = new Tbuser();
+        for (Tbuser data : tbusers) {
+            if (data.getUserUsername().equals(object.getUserName())) {
+                isidata = data;
                 break;
             }
         }
@@ -55,14 +56,14 @@ public class UserDao implements DaoServiceCRUD<Tbuser> {
 
     @Override
     public int updateData(Tbuser object) {
-        int result=0;
-        Session session=HibernateUtil.getSession();
-        Transaction transaction=session.beginTransaction();
+        int result = 0;
+        Session session = HibernateUtil.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
             session.update(object);
             transaction.commit();
-            result=1;
-        }catch (HibernateException e){
+            result = 1;
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         return result;
@@ -70,14 +71,14 @@ public class UserDao implements DaoServiceCRUD<Tbuser> {
 
     @Override
     public int deleteData(Tbuser object) {
-        int result=0;
-        Session session=HibernateUtil.getSession();
-        Transaction transaction=session.beginTransaction();
+        int result = 0;
+        Session session = HibernateUtil.getSession();
+        Transaction transaction = session.beginTransaction();
         try {
             session.delete(object);
             transaction.commit();
-            result=1;
-        }catch (HibernateException e){
+            result = 1;
+        } catch (HibernateException e) {
             transaction.rollback();
         }
         return result;

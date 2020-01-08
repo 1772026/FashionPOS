@@ -1,7 +1,9 @@
 package fashionPOS.Model.Entity;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
@@ -11,7 +13,6 @@ public class Tbcustomer {
     private String customerAddress;
     private String customerTelp;
     private String customerEmail;
-    private Collection<Tbtransaction> tbtransactionsByCustomerId;
 
     @Id
     @Column(name = "customer_id", nullable = false)
@@ -78,14 +79,5 @@ public class Tbcustomer {
     @Override
     public int hashCode() {
         return Objects.hash(customerId, customerName, customerAddress, customerTelp, customerEmail);
-    }
-
-    @OneToMany(mappedBy = "tbcustomerByTbcustomerCustomerId")
-    public Collection<Tbtransaction> getTbtransactionsByCustomerId() {
-        return tbtransactionsByCustomerId;
-    }
-
-    public void setTbtransactionsByCustomerId(Collection<Tbtransaction> tbtransactionsByCustomerId) {
-        this.tbtransactionsByCustomerId = tbtransactionsByCustomerId;
     }
 }

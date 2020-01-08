@@ -1,7 +1,6 @@
 package fashionPOS.Model.Entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -12,8 +11,7 @@ public class Tbitem {
     private int itemPriceSupply;
     private String itemDescription;
     private Tbcategory tbcategoryByTbcategoryCategoryId;
-    private Collection<Tbsizestock> tbsizestocksByItemId;
-    private Collection<Tbtransaction> tbtransactionsByItemId;
+    private Tbsizestock tbsizestockByItemId;
 
     @Id
     @Column(name = "item_id", nullable = false)
@@ -92,21 +90,12 @@ public class Tbitem {
         this.tbcategoryByTbcategoryCategoryId = tbcategoryByTbcategoryCategoryId;
     }
 
-    @OneToMany(mappedBy = "tbitemByTbitemItemId")
-    public Collection<Tbsizestock> getTbsizestocksByItemId() {
-        return tbsizestocksByItemId;
+    @OneToOne(mappedBy = "tbitemByTbitemItemId")
+    public Tbsizestock getTbsizestockByItemId() {
+        return tbsizestockByItemId;
     }
 
-    public void setTbsizestocksByItemId(Collection<Tbsizestock> tbsizestocksByItemId) {
-        this.tbsizestocksByItemId = tbsizestocksByItemId;
-    }
-
-    @OneToMany(mappedBy = "tbitemByTbitemItemId")
-    public Collection<Tbtransaction> getTbtransactionsByItemId() {
-        return tbtransactionsByItemId;
-    }
-
-    public void setTbtransactionsByItemId(Collection<Tbtransaction> tbtransactionsByItemId) {
-        this.tbtransactionsByItemId = tbtransactionsByItemId;
+    public void setTbsizestockByItemId(Tbsizestock tbsizestockByItemId) {
+        this.tbsizestockByItemId = tbsizestockByItemId;
     }
 }

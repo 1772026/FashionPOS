@@ -27,14 +27,14 @@ public class LoginController {
     @FXML
     private TextField txtPassword;
 
-    public Tbuser getLogin(Tbuser data){
+    private Tbuser getLogin(Tbuser data){
         if(tbuser == null){
             tbuser=getLoginDao().getData(data);
         }
         return tbuser;
     }
 
-    public UserDao getLoginDao() {
+    private UserDao getLoginDao() {
         if (loginDao == null) {
             loginDao = new UserDao();
         }
@@ -49,7 +49,7 @@ public class LoginController {
 
         FXMLLoader loader = new FXMLLoader();
         selfStage = new Stage();
-        if (getLoginDao().getData(tbuser).getTbroleByTbroleRoleId().getRoleName().equals("admin")) {
+        if (getLogin(tbuser).getTbroleByTbroleRoleId().getRoleName().equals("admin")) {
             try {
                 loader.setLocation(getClass().getResource("/fashionPOS/View/homeAdmin.fxml"));
                 BorderPane pane = loader.load();
@@ -66,13 +66,13 @@ public class LoginController {
         } else if (getLoginDao().getData(tbuser).getTbroleByTbroleRoleId().getRoleName().equals("kasir")) {
             try {
                 loader.setLocation(getClass().getResource("/fashionPOS/View/point_of_sales.fxml"));
-                VBox pane = loader.load();
+                AnchorPane pane = loader.load();
                 Scene scene = new Scene(pane);
                 selfStage.setScene(scene);
                 selfStage.setTitle("POS");
                 selfStage.initModality(Modality.APPLICATION_MODAL);
 
-                ((Stage) root.getScene().getWindow()).close();
+                ((Stage) this.root.getScene().getWindow()).close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

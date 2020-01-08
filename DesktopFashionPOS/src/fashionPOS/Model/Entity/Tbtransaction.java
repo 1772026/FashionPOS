@@ -11,6 +11,7 @@ public class Tbtransaction {
     private int transactionStatus;
     private int transactionTotalprice;
     private String transactionPaymenttype;
+    private Integer qty;
     private Tbcustomer tbcustomerByTbcustomerCustomerId;
     private Tbitem tbitemByTbitemItemId;
     private Tbuser tbuserByTbuserUserId;
@@ -65,6 +66,16 @@ public class Tbtransaction {
         this.transactionPaymenttype = transactionPaymenttype;
     }
 
+    @Basic
+    @Column(name = "qty", nullable = true)
+    public Integer getQty() {
+        return qty;
+    }
+
+    public void setQty(Integer qty) {
+        this.qty = qty;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,12 +85,13 @@ public class Tbtransaction {
                 transactionStatus == that.transactionStatus &&
                 transactionTotalprice == that.transactionTotalprice &&
                 Objects.equals(transactionDate, that.transactionDate) &&
-                Objects.equals(transactionPaymenttype, that.transactionPaymenttype);
+                Objects.equals(transactionPaymenttype, that.transactionPaymenttype) &&
+                Objects.equals(qty, that.qty);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(transactionId, transactionDate, transactionStatus, transactionTotalprice, transactionPaymenttype);
+        return Objects.hash(transactionId, transactionDate, transactionStatus, transactionTotalprice, transactionPaymenttype, qty);
     }
 
     @ManyToOne
