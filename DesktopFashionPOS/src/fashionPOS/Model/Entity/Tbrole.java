@@ -17,6 +17,11 @@ public class Tbrole {
         return roleId;
     }
 
+    @Override
+    public String toString() {
+        return roleName;
+    }
+
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
