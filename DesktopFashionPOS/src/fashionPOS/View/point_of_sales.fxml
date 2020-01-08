@@ -184,7 +184,7 @@
                   <Button fx:id="showall" mnemonicParsing="false" onAction="#showall" prefHeight="31.0" prefWidth="156.0" style="-fx-background-radius: 7; -fx-text-fill: #000000;" text="Show All" GridPane.columnIndex="6" />
                </children>
             </GridPane>
-            <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="1161.0" style="-fx-alignment: center;" text="PROGRAM KASIR FASHION POINT OF SALES" textAlignment="CENTER" textFill="WHITE" GridPane.columnSpan="2">
+            <Label contentDisplay="CENTER" prefHeight="21.0" prefWidth="1193.0" style="-fx-alignment: center;" text="PROGRAM KASIR FASHION POINT OF SALES" textAlignment="CENTER" textFill="WHITE" GridPane.columnSpan="2">
                <padding>
                   <Insets left="5.0" />
                </padding>
