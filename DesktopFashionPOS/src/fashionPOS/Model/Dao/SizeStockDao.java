@@ -34,7 +34,7 @@ public class SizeStockDao implements DaoServiceCRUD<Tbsizestock> {
         Session session = HibernateUtil.getSession();
         Criteria criteria = session.createCriteria(Tbsizestock.class);
         tbusers.addAll(criteria.list());
-        return null;
+        return tbusers;
     }
 
     @Override

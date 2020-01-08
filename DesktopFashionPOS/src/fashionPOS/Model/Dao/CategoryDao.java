@@ -34,7 +34,7 @@ public class CategoryDao implements DaoServiceCRUD<Tbcategory> {
         Session session = HibernateUtil.getSession();
         Criteria criteria = session.createCriteria(Tbcategory.class);
         tbusers.addAll(criteria.list());
-        return null;
+        return tbusers;
     }
 
     @Override

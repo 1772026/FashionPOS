@@ -34,7 +34,7 @@ public class RoleDao implements DaoServiceCRUD<Tbrole> {
         Session session=HibernateUtil.getSession();
         Criteria criteria=session.createCriteria(Tbrole.class);
         tbusers.addAll(criteria.list());
-        return null;
+        return tbusers;
     }
 
     @Override

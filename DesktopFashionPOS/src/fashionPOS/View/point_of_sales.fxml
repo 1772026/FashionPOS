@@ -131,7 +131,7 @@
                            </padding>
                         </Label>
                         <TextField fx:id="kembali" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField fx:id="bayar" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="bayar" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <TextField fx:id="totalNet" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                        </children>
                     </GridPane>

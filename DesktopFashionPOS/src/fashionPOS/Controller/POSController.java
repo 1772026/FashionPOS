@@ -4,6 +4,7 @@ import fashionPOS.Model.Dao.ItemDao;
 import fashionPOS.Model.Dao.TransaksiDao;
 import fashionPOS.Model.Entity.Tbitem;
 import fashionPOS.Model.Entity.Tbtransaction;
+import fashionPOS.Model.Entity.Tbuser;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -75,6 +76,10 @@ public class POSController implements Initializable {
     private CheckBox disc;
     @FXML
     private TextField totalNet;
+    @FXML
+    private TextField kembali;
+    @FXML
+    private TextField bayar;
 
 
     private ObservableList<Tbitem> getTbitems() {
@@ -110,23 +115,6 @@ public class POSController implements Initializable {
         return transaksiDao;
     }
 
-    @FXML
-    private void out(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            selfStage = new Stage();
-            loader.setLocation(getClass().getResource("/fashionPOS/View/login.fxml"));
-            AnchorPane pane = loader.load();
-            Scene scene = new Scene(pane);
-            selfStage.setScene(scene);
-            selfStage.initModality(Modality.APPLICATION_MODAL);
-
-            ((Stage) this.root.getScene().getWindow()).close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        selfStage.show();
-    }
 
     private Tbitem clickItem;
     private Tbtransaction clickTrans;
@@ -146,7 +134,41 @@ public class POSController implements Initializable {
 
     @FXML
     private void checkout(ActionEvent actionEvent) {
+        if (Hasil == 0.0) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Belum Ada Transaksi!");
+            a.show();
+        } else {
+            if (bayar.getText() == null || bayar.getText().trim().isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Uangnya Mana? T_T");
+                a.show();
+            } else if (Double.parseDouble(bayar.getText()) < Hasil) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Jangan Mau Rugi :)!\nUangnya Kurang!");
+                a.show();
 
+            } else {
+                Date now = new Date();
+                kembali.setText(convIDR(Double.parseDouble(bayar.getText()) - Hasil));
+                Tbtransaction data = new Tbtransaction();
+                for (Tbtransaction i : listTransaksi) {
+                    i.setTransactionId(getTbtransactions().size() + 1);
+                    i.setTransactionDate(now);
+                    i.setTransactionStatus(1);
+                    i.setTbuserByTbuserUserId(pelaku);
+//                    getTransaksiDao().addData(i);
+                    System.out.println(i.getTransactionId());
+                }
+            }
+        }
+    }
+
+    public void reset() {
+        tbitems.clear();
+        tbtransactions.clear();
+        tableItem.setItems(tbitems);
+        tableTrf.setItems(tbtransactions);
     }
 
     @Override
@@ -270,13 +292,15 @@ public class POSController implements Initializable {
 
     }
 
+    private Double Hasil = 0.0;
+
     private void internalModelPesanan() {
         NetAmo = 0.0;
         for (Tbtransaction i : listTransaksi) {
             NetAmo += i.getTransactionTotalprice() * i.getQty();
         }
         net.setText(String.valueOf(convIDR(NetAmo)));
-        Double Hasil = NetAmo + Double.parseDouble(tax.getText().equals("") ? "0" : tax.getText());
+        Hasil = NetAmo + Double.parseDouble(tax.getText().equals("") ? "0" : tax.getText());
 
         totalNet.setText(convIDR(Hasil));
     }
@@ -317,11 +341,17 @@ public class POSController implements Initializable {
     @FXML
     private void delete(ActionEvent actionEvent) {
         if (clickTrans != null && !listTransaksi.isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setContentText("Apakah yakin mau menghapus data?");
+            a.setContentText("Konfirmasi Hapus");
+            a.showAndWait();
+            if (a.getResult() == ButtonType.OK) {
+                listTransaksi.remove(clickTrans);
+                penampungListTransaksi.setAll(listTransaksi);
+                tableTrf.refresh();
+                internalModelPesanan();
+            }
 
-            listTransaksi.remove(clickTrans);
-            penampungListTransaksi.setAll(listTransaksi);
-            tableTrf.refresh();
-            internalModelPesanan();
         }
     }
 
@@ -344,5 +374,11 @@ public class POSController implements Initializable {
             tax.setText("");
         }
 
+    }
+
+    private Tbuser pelaku;
+
+    public void setMainFormController(Tbuser pelaku) {
+        this.pelaku = pelaku;
     }
 }

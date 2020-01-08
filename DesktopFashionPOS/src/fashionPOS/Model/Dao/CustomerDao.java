@@ -34,7 +34,7 @@ public class CustomerDao implements DaoServiceCRUD<Tbcustomer> {
         Session session = HibernateUtil.getSession();
         Criteria criteria = session.createCriteria(Tbcustomer.class);
         tbusers.addAll(criteria.list());
-        return null;
+        return tbusers;
     }
 
     @Override
