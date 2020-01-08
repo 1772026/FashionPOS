@@ -50,10 +50,6 @@ public class Tbcategory {
         return Objects.hash(categoryId, categoryType);
     }
 
-    @Override
-    public String toString() {
-        return categoryType ;
-    }
 }
 
 

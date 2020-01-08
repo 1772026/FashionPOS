@@ -115,7 +115,6 @@ public class itemController implements Initializable {
         boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName() == item.getItemName());
         if (notDuplicate) {
             getItemDao().addData(item);
-            clearForm();
             tableItem.refresh();
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -127,7 +126,6 @@ public class itemController implements Initializable {
 
     @FXML
     private void reset(ActionEvent actionEvent) {
-        clearForm();
     }
 
     @FXML
@@ -146,29 +144,26 @@ public class itemController implements Initializable {
         item.setItemDescription(txtDescription.getText());
         item.setTbcategoryByTbcategoryCategoryId(category);
 
-        boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName() == item.getItemName());
-<<<<<<< HEAD
-        if (notDuplicate) {
-            getItemDao().updateData(item);
-            clearForm();
-        } else {
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Duplicate Item Name");
-            a.showAndWait();
-=======
+        boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName().equals(item.getItemName()));
         if (selected.getItemName() != txtid.getText()) {
             if (notDuplicate) {
                 itemDao.updateData(item);
-                clearForm();
                 tableItem.refresh();
             } else {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setContentText("Duplicate Item Name");
                 a.showAndWait();
             }
->>>>>>> 7b16a10c8337a2ad9b59ce6763c809d569b5ed41
         }
         tableItem.refresh();
+//        if (notDuplicate) {
+//            getItemDao().updateData(item);
+//        } else {
+//            Alert a = new Alert(Alert.AlertType.ERROR);
+//            a.setContentText("Duplicate Item Name");
+//            a.showAndWait();
+//
+//        }
     }
 
     @FXML
@@ -180,16 +175,13 @@ public class itemController implements Initializable {
         category.setCategoryType(comboCategory.getSelectionModel().getSelectedItem().getCategoryType());
 
         item.setItemId(Integer.parseInt(txtid.getText()));
-<<<<<<< HEAD
         getItemDao().updateData(item);
-=======
         item.setItemName(txtName.getText().trim());
         item.setItemPriceSell(Integer.parseInt(txtPriceSell.getText().trim()));
         item.setItemPriceSupply(Integer.parseInt(txtPriceBuy.getText().trim()));
         item.setItemDescription(txtDescription.getText());
         item.setTbcategoryByTbcategoryCategoryId(category);
         itemDao.deleteData(item);
->>>>>>> 7b16a10c8337a2ad9b59ce6763c809d569b5ed41
         clearForm();
         tableItem.refresh();
     }
