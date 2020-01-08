@@ -86,18 +86,22 @@ public class itemController implements Initializable {
     private void save(ActionEvent actionEvent) {
         Tbitem item = new Tbitem();
         Tbcategory category = new Tbcategory();
+
         category.setCategoryId(comboCategory.getSelectionModel().getSelectedItem().getCategoryId());
+        category.setCategoryType(comboCategory.getSelectionModel().getSelectedItem().getCategoryType());
+
 
         item.setItemName(txtName.getText().trim());
         item.setItemPriceSell(Integer.parseInt(txtPriceSell.getText().trim()));
         item.setItemPriceSupply(Integer.parseInt(txtPriceBuy.getText().trim()));
         item.setItemDescription(txtDescription.getText());
         item.setTbcategoryByTbcategoryCategoryId(category);
-        boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName() == item.getItemName());
 
+        boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName() == item.getItemName());
         if (notDuplicate) {
             itemDao.addData(item);
             clearForm();
+            tableItem.refresh();
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Duplicate Item Name");
@@ -114,7 +118,10 @@ public class itemController implements Initializable {
     private void update(ActionEvent actionEvent) {
         Tbitem item = new Tbitem();
         Tbcategory category = new Tbcategory();
+
         category.setCategoryId(comboCategory.getSelectionModel().getSelectedItem().getCategoryId());
+        category.setCategoryType(comboCategory.getSelectionModel().getSelectedItem().getCategoryType());
+
 
         item.setItemId(Integer.parseInt(txtid.getText()));
         item.setItemName(txtName.getText().trim());
@@ -122,23 +129,38 @@ public class itemController implements Initializable {
         item.setItemPriceSupply(Integer.parseInt(txtPriceBuy.getText().trim()));
         item.setItemDescription(txtDescription.getText());
         item.setTbcategoryByTbcategoryCategoryId(category);
+
         boolean notDuplicate = getTbItems().stream().noneMatch(d -> d.getItemName() == item.getItemName());
-        if (notDuplicate) {
-            itemDao.updateData(item);
-            clearForm();
-        } else {
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Duplicate Item Name");
-            a.showAndWait();
+        if (selected.getItemName() != txtid.getText()) {
+            if (notDuplicate) {
+                itemDao.updateData(item);
+                clearForm();
+                tableItem.refresh();
+            } else {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Duplicate Item Name");
+                a.showAndWait();
+            }
         }
     }
 
     @FXML
     private void delete(ActionEvent actionEvent) {
         Tbitem item = new Tbitem();
+        Tbcategory category = new Tbcategory();
+
+        category.setCategoryId(comboCategory.getSelectionModel().getSelectedItem().getCategoryId());
+        category.setCategoryType(comboCategory.getSelectionModel().getSelectedItem().getCategoryType());
+
         item.setItemId(Integer.parseInt(txtid.getText()));
-        itemDao.updateData(item);
+        item.setItemName(txtName.getText().trim());
+        item.setItemPriceSell(Integer.parseInt(txtPriceSell.getText().trim()));
+        item.setItemPriceSupply(Integer.parseInt(txtPriceBuy.getText().trim()));
+        item.setItemDescription(txtDescription.getText());
+        item.setTbcategoryByTbcategoryCategoryId(category);
+        itemDao.deleteData(item);
         clearForm();
+        tableItem.refresh();
     }
 
     @FXML
@@ -149,6 +171,7 @@ public class itemController implements Initializable {
         txtPriceSell.setText(String.valueOf(selected.getItemPriceSell()));
         txtPriceBuy.setText(String.valueOf(selected.getItemPriceSupply()));
         txtDescription.setText(selected.getItemDescription());
+        comboCategory.setValue(selected.getTbcategoryByTbcategoryCategoryId());
         save.setDisable(true);
         update.setDisable(false);
         delete.setDisable(false);
@@ -169,7 +192,7 @@ public class itemController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableItem.setItems(getTbItems());
-//        comboCategory.setItems(getCategories());
+        comboCategory.setItems(getCategories());
         colID.setCellValueFactory(data ->
                 new SimpleStringProperty(String.valueOf(data.getValue().getItemId())));
         colName.setCellValueFactory(data ->

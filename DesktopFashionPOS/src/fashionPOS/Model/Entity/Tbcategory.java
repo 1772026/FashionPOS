@@ -44,4 +44,11 @@ public class Tbcategory {
     public int hashCode() {
         return Objects.hash(categoryId, categoryType);
     }
+
+    @Override
+    public String toString() {
+        return categoryType ;
+    }
 }
+
+
