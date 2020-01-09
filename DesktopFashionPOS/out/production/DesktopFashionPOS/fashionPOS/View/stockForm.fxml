@@ -121,14 +121,9 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="delete" mnemonicParsing="false" onAction="#delete" style="-fx-background-color: #005b96; -fx-background-radius: 7; -fx-text-fill: #FFFFFF;" text="Delete">
-                    <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </HBox.margin>
-                </Button>
             </HBox>
         </VBox>
-        <TableView fx:id="tableStock" prefHeight="676.0" prefWidth="837.0">
+        <TableView fx:id="tableStock" onMouseClicked="#tableClicked" prefHeight="676.0" prefWidth="837.0" >
             <columns>
                 <TableColumn fx:id="colName" prefWidth="301.0" text="Nama Item" />
                 <TableColumn fx:id="colS" minWidth="0.0" prefWidth="115.0" text="S" />
