@@ -50,6 +50,21 @@ public class HomeAdminController {
     }
 
     @FXML
+    private void report(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            userStage = new Stage();
+            loader.setLocation(getClass().getResource("/fashionPOS/View/view_transaksi.fxml"));
+            VBox pane = loader.load();
+            Scene scene = new Scene(pane);
+            root.setCenter(new AnchorPane(pane));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void out(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -58,6 +73,7 @@ public class HomeAdminController {
             AnchorPane pane = loader.load();
             Scene scene = new Scene(pane);
             selfStage.setScene(scene);
+            selfStage.setTitle("Fashion POS");
             selfStage.initModality(Modality.APPLICATION_MODAL);
 
             ((Stage) root.getScene().getWindow()).close();
@@ -65,5 +81,21 @@ public class HomeAdminController {
             e.printStackTrace();
         }
         selfStage.show();
+    }
+
+
+    @FXML
+    private void retur(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            userStage = new Stage();
+            loader.setLocation(getClass().getResource("/fashionPOS/View/return_item_form.fxml"));
+            AnchorPane pane = loader.load();
+            Scene scene = new Scene(pane);
+            root.setCenter(new AnchorPane(pane));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

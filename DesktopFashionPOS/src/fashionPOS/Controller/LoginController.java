@@ -73,7 +73,7 @@ public class LoginController {
                 selfStage.setScene(scene);
                 selfStage.setTitle("POS");
                 selfStage.initModality(Modality.APPLICATION_MODAL);
-
+                selfStage.setResizable(false);
                 ((Stage) this.root.getScene().getWindow()).close();
             } catch (IOException e) {
                 e.printStackTrace();

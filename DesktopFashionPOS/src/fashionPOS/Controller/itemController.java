@@ -10,11 +10,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -58,8 +64,8 @@ public class itemController implements Initializable {
     private Tbitem selected;
     private ObservableList<Tbitem> tbItems;
     private ObservableList<Tbcategory> tbCategories;
-    private ItemDao itemDao ;
-    private CategoryDao categoryDao ;
+    private ItemDao itemDao;
+    private CategoryDao categoryDao;
 
 
     private ObservableList<Tbitem> getTbItems() {
@@ -220,5 +226,28 @@ public class itemController implements Initializable {
                 new SimpleStringProperty(String.valueOf(data.getValue().getItemPriceSell())));
     }
 
+    private Stage selfStage;
 
+    @FXML
+    private void StockSize(ActionEvent actionEvent) {
+        if (selected == null){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Selecct Item First!");
+            a.showAndWait();
+        }else {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                selfStage = new Stage();
+                loader.setLocation(getClass().getResource("/fashionPOS/View/stockForm.fxml"));
+                VBox pane = loader.load();
+                Scene scene = new Scene(pane);
+                selfStage.setScene(scene);
+                selfStage.initModality(Modality.APPLICATION_MODAL);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            selfStage.show();
+        }
+
+    }
 }

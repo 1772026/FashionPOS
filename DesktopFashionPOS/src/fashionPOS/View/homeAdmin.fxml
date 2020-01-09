@@ -14,6 +14,8 @@
                   <items>
                       <MenuItem mnemonicParsing="false" onAction="#actionFormItem" text="Item" />
                       <MenuItem mnemonicParsing="false" onAction="#actionFormUser" text="User" />
+                  <MenuItem mnemonicParsing="false" onAction="#report" text="Report" />
+                  <MenuItem mnemonicParsing="false" onAction="#retur" text="Retur" />
                   </items>
                </Menu>
            </menus>
