@@ -11,7 +11,6 @@ public class Tbitem {
     private int itemPriceSupply;
     private String itemDescription;
     private Tbcategory tbcategoryByTbcategoryCategoryId;
-    private Tbsizestock tbsizestockByItemId;
 
     @Id
     @Column(name = "item_id", nullable = false)
@@ -88,14 +87,5 @@ public class Tbitem {
 
     public void setTbcategoryByTbcategoryCategoryId(Tbcategory tbcategoryByTbcategoryCategoryId) {
         this.tbcategoryByTbcategoryCategoryId = tbcategoryByTbcategoryCategoryId;
-    }
-
-    @OneToOne(mappedBy = "tbitemByTbitemItemId")
-    public Tbsizestock getTbsizestockByItemId() {
-        return tbsizestockByItemId;
-    }
-
-    public void setTbsizestockByItemId(Tbsizestock tbsizestockByItemId) {
-        this.tbsizestockByItemId = tbsizestockByItemId;
     }
 }

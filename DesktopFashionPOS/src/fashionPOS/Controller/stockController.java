@@ -1,5 +1,7 @@
 package fashionPOS.Controller;
-
+/**
+ * Created By Nicolavickh
+ */
 import fashionPOS.Model.Dao.SizeStockDao;
 import fashionPOS.Model.Entity.Tbitem;
 import fashionPOS.Model.Entity.Tbsizestock;
@@ -59,15 +61,21 @@ public class stockController implements Initializable {
     @FXML
     private TableColumn<Tbsizestock, String> colXXXL;
     private Tbsizestock selected = new Tbsizestock();
-    private SizeStockDao stockDao = new SizeStockDao();
+    private SizeStockDao stockDao;
     private ObservableList<Tbsizestock> stocks;
 
     private ObservableList<Tbsizestock> getStock() {
         if (stocks == null) {
             stocks = FXCollections.observableArrayList();
-            stocks.addAll(stockDao.getAllData());
+            stocks.addAll(getStockDao().getAllData());
         }
         return stocks;
+    }
+    private SizeStockDao getStockDao() {
+        if (stockDao == null) {
+            stockDao = new SizeStockDao();
+        }
+        return stockDao;
     }
     @FXML
     private void add(ActionEvent actionEvent) {
@@ -84,15 +92,13 @@ public class stockController implements Initializable {
 
     @FXML
     private void update(ActionEvent actionEvent) {
-        Tbsizestock stock = new Tbsizestock();
-        stock.setTbitemByTbitemItemId(selected.getTbitemByTbitemItemId());
-        stock.setSizestockSStock(Integer.parseInt(txtS.getText()));
-        stock.setSizestockMStock(Integer.parseInt(txtM.getText()));
-        stock.setSizestockLStock(Integer.parseInt(txtL.getText()));
-        stock.setSizestockXlStock(Integer.parseInt(txtXL.getText()));
-        stock.setSizestockXxlStock(Integer.parseInt(txtXXL.getText()));
-        stock.setSizestockXxxlStock(Integer.parseInt(txtXXXL.getText()));
-        stockDao.updateData(stock);
+        selected.setSizestockSStock(Integer.parseInt(txtS.getText()));
+        selected.setSizestockMStock(Integer.parseInt(txtM.getText()));
+        selected.setSizestockLStock(Integer.parseInt(txtL.getText()));
+        selected.setSizestockXlStock(Integer.parseInt(txtXL.getText()));
+        selected.setSizestockXxlStock(Integer.parseInt(txtXXL.getText()));
+        selected.setSizestockXxxlStock(Integer.parseInt(txtXXXL.getText()));
+        stockDao.updateData(selected);
     }
 
 

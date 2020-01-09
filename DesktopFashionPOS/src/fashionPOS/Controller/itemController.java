@@ -1,5 +1,7 @@
 package fashionPOS.Controller;
-
+/**
+ * Created By Nicolavickh
+ */
 import fashionPOS.Model.Dao.CategoryDao;
 import fashionPOS.Model.Dao.ItemDao;
 import fashionPOS.Model.Entity.Tbcategory;
@@ -230,11 +232,7 @@ public class itemController implements Initializable {
 
     @FXML
     private void StockSize(ActionEvent actionEvent) {
-        if (selected == null){
-            Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setContentText("Selecct Item First!");
-            a.showAndWait();
-        }else {
+
             try {
                 FXMLLoader loader = new FXMLLoader();
                 selfStage = new Stage();
@@ -247,7 +245,7 @@ public class itemController implements Initializable {
                 e.printStackTrace();
             }
             selfStage.show();
-        }
+
 
     }
 }

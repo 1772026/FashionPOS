@@ -1,5 +1,7 @@
 package fashionPOS.Model.Dao;
-
+/**
+ * Created By Steven
+ */
 import fashionPOS.Model.Entity.Tbtransaction;
 import fashionPOS.Util.DaoServiceCRUD;
 import fashionPOS.Util.HibernateUtil;

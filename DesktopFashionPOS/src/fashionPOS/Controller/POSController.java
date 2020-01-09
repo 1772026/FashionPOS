@@ -1,5 +1,7 @@
 package fashionPOS.Controller;
-
+/**
+ * Created By Steven
+ */
 import fashionPOS.Model.Dao.ItemDao;
 import fashionPOS.Model.Dao.TransaksiDao;
 import fashionPOS.Model.Entity.Tbitem;
@@ -190,7 +192,25 @@ public class POSController implements Initializable {
                     getTransaksiDao().addData(i);
                     id++;
                 }
+                FXMLLoader loader = new FXMLLoader();
+                selfStage = new Stage();
+                try {
+                    loader.setLocation(getClass().getResource("/fashionPOS/View/transaksi.fxml"));
+                    AnchorPane pane = loader.load();
+                    Scene scene = new Scene(pane);
+                    Transaksi controller = loader.getController();
+                    controller.initial(convIDR(Hasil), bayar.getText(), convIDR(Double.parseDouble(bayar.getText()) - Hasil));
+                    selfStage.setScene(scene);
+                    selfStage.setTitle("POS");
+                    selfStage.initModality(Modality.APPLICATION_MODAL);
+                    selfStage.setResizable(false);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                selfStage.show();
                 reset();
+
             }
         }
     }

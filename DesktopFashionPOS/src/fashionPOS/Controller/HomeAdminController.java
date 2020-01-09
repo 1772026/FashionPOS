@@ -1,4 +1,7 @@
 package fashionPOS.Controller;
+/**
+ * Created By Steven Rumanto
+ */
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

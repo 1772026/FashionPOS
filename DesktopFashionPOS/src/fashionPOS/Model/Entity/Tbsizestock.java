@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 public class Tbsizestock {
-    private int tbitemItemId;
+    private int id;
     private int sizestockSStock;
     private int sizestockMStock;
     private int sizestockLStock;
@@ -15,13 +15,13 @@ public class Tbsizestock {
     private Tbitem tbitemByTbitemItemId;
 
     @Id
-    @Column(name = "tbitem_item_id", nullable = false)
-    public int getTbitemItemId() {
-        return tbitemItemId;
+    @Column(name = "id", nullable = false)
+    public int getId() {
+        return id;
     }
 
-    public void setTbitemItemId(int tbitemItemId) {
-        this.tbitemItemId = tbitemItemId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Basic
@@ -89,7 +89,7 @@ public class Tbsizestock {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tbsizestock that = (Tbsizestock) o;
-        return tbitemItemId == that.tbitemItemId &&
+        return id == that.id &&
                 sizestockSStock == that.sizestockSStock &&
                 sizestockMStock == that.sizestockMStock &&
                 sizestockLStock == that.sizestockLStock &&
@@ -100,10 +100,10 @@ public class Tbsizestock {
 
     @Override
     public int hashCode() {
-        return Objects.hash(tbitemItemId, sizestockSStock, sizestockMStock, sizestockLStock, sizestockXlStock, sizestockXxlStock, sizestockXxxlStock);
+        return Objects.hash(id, sizestockSStock, sizestockMStock, sizestockLStock, sizestockXlStock, sizestockXxlStock, sizestockXxxlStock);
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "tbitem_item_id", referencedColumnName = "item_id", nullable = false)
     public Tbitem getTbitemByTbitemItemId() {
         return tbitemByTbitemItemId;
