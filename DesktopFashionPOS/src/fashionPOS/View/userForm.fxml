@@ -29,7 +29,7 @@
       </Label>
       <HBox>
          <children>
-            <VBox style="-fx-background-color: #adcbe3;">
+            <VBox alignment="CENTER" style="-fx-background-color: #adcbe3;">
                <children>
                   <GridPane alignment="CENTER" prefHeight="537.0" prefWidth="409.0" style="-fx-background-color: #adcbe3;">
                      <columnConstraints>
@@ -115,6 +115,7 @@
                         </Button>
                      </children>
                   </HBox>
+                  <Button fx:id="reset" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#reset" prefHeight="32.0" prefWidth="114.0" style="-fx-background-color: #005b96; -fx-background-radius: 7; -fx-text-fill: #FFFFFF;" text="RESET" textAlignment="RIGHT" />
                </children>
             </VBox>
             <TableView fx:id="tableUser" onMouseClicked="#selectRole" prefHeight="536.0" prefWidth="793.0">

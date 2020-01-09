@@ -25,7 +25,7 @@ public class userController implements Initializable {
     @FXML
     private VBox child;
     @FXML
-    private ComboBox role;
+    private ComboBox<Tbrole> role;
     @FXML
     private PasswordField password;
     @FXML
@@ -57,6 +57,8 @@ public class userController implements Initializable {
     private ObservableList<Tbrole> tbroles;
     private RoleDao roleDao;
     private Tbuser selectUser;
+    @FXML
+    private Button reset;
 
     private ObservableList<Tbuser> getTbusers() {
         if (tbusers == null) {
@@ -88,16 +90,89 @@ public class userController implements Initializable {
         return roleDao;
     }
 
+    private boolean checker() {
+        if (
+                name.getText().trim().isEmpty() ||
+                        username.getText().trim().isEmpty() ||
+                        password.getText().trim().isEmpty() ||
+                        role.getValue() == null
+
+        ) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Check Your Input!");
+            a.show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @FXML
     private void add(ActionEvent actionEvent) {
+        if (checker()) {
+            Tbuser data = new Tbuser();
+            data.setUserUsername(username.getText());
+            data.setUserPassword(password.getText());
+            data.setTbroleByTbroleRoleId(role.getValue());
+            data.setUserName(name.getText());
+            userDao.addData(data);
+            getTbusers().setAll(getUserDao().getAllData());
+            tableUser.setItems(getTbusers());
+            tableUser.refresh();
+        }
     }
 
     @FXML
     private void update(ActionEvent actionEvent) {
+        if (checker()) {
+
+            Tbuser data = new Tbuser();
+            data.setUserUsername(username.getText());
+            data.setUserPassword(password.getText());
+            data.setTbroleByTbroleRoleId(role.getValue());
+            data.setUserName(name.getText());
+            userDao.updateData(data);
+            getTbusers().setAll(getUserDao().getAllData());
+            tableUser.setItems(getTbusers());
+            tableUser.refresh();
+            cleat();
+
+        }
     }
 
     @FXML
     private void delete(ActionEvent actionEvent) {
+        if (checker()) {
+            if (selectUser.getUserId() == 1 || selectUser.getUserId() == 2) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setContentText("Tidak bisa di hapus, karena user utama");
+                a.show();
+            } else {
+                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                a.setContentText("Apakah yakin mau menghapus data?");
+                a.setContentText("Konfirmasi Hapus");
+                a.showAndWait();
+                if (a.getResult() == ButtonType.OK) {
+                    userDao.deleteData(selectUser);
+                    getTbusers().setAll(getUserDao().getAllData());
+                    tableUser.setItems(getTbusers());
+                    tableUser.refresh();
+                    cleat();
+                }
+
+            }
+
+        }
+
+    }
+
+
+    private void cleat() {
+        id.setText("");
+        name.setText("");
+        username.setText("");
+        password.setText("");
+        role.setValue(null);
     }
 
     @Override
@@ -115,6 +190,20 @@ public class userController implements Initializable {
 
     @FXML
     private void selectRole(MouseEvent mouseEvent) {
-        selectUser = tableUser.getSelectionModel().getSelectedItem();
+        try {
+            selectUser = tableUser.getSelectionModel().getSelectedItem();
+            id.setText(String.valueOf(selectUser.getUserId()));
+            username.setText(selectUser.getUserName());
+            password.setText(selectUser.getUserPassword());
+            role.setValue(selectUser.getTbroleByTbroleRoleId());
+            name.setText(selectUser.getUserName());
+        } catch (Exception e) {
+        }
+    }
+
+    @FXML
+    private void reset(ActionEvent actionEvent) {
+        cleat();
     }
 }
+
